@@ -20,13 +20,11 @@ app.set('port', process.env.port || 3000);
 app.use(cors());
 app.use(express.json());
 
-// CORS
-// https://auth0.com/blog/cors-tutorial-a-guide-to-cross-origin-resource-sharing/
-// https://medium.com/@dtkatz/3-ways-to-fix-the-cors-error-and-how-access-control-allow-origin-works-d97d55946d9
-
+// Static files
+// app.use(express.static(__dirname + '/public'));
 
 // Routes
-app.use(require('./routes/employees'));
+app.use('/employees', require('./routes/employees'));
 
 app.listen(app.get('port'), () => {
     console.log('Server runing on port', app.get('port'));

@@ -3,18 +3,8 @@ const router = express.Router();
 const db = require('../config/database');
 const Employee = require('../models/Employee');
 
-// Get employees list console
-router.get('/', (req, res) => 
-    Employee.findAll()
-    .then(employees => {
-        console.log(employees);
-        res.sendStatus(200);
-    })
-    .catch(err => {console.log('Error: ', err)})
-);
-
 // Get employees list
-router.get('/employees', (req, res) =>
+router.get('/', (req, res) =>
     Employee.findAll()
     .then((employees) => {
         res.json(employees);
@@ -22,9 +12,14 @@ router.get('/employees', (req, res) =>
     })
     .catch(err => { console.log('Error:', err) })
 );
-
+// router.get('/', async (req, res) => {
+//     const employees = await Employee.findAll();
+//     res.json(employees);
+//     res.sendStatus(200);
+//     // .catch(err => { console.log('Error:', err) })
+// });
 // Get an employee
-router.get('/employees/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     const { id } = req.params;
     Employee.findByPk(id)
     .then((employee) => {
@@ -35,7 +30,7 @@ router.get('/employees/:id', (req, res) => {
     .catch(err => { console.log('Error:', err) })
 });
 
-router.post('/employee', (req, res) => {
+router.post('/', (req, res) => {
     const { name } = req.body;
     Employee.create({
         name: name,
@@ -53,7 +48,7 @@ router.post('/employee', (req, res) => {
 });
 
 // Update employee
-router.put('/employee/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const { id } = req.params;
     const { name } = req.body;
     const { last_name } = req.body;
@@ -76,7 +71,7 @@ router.put('/employee/:id', (req, res) => {
 });
 
 // Delete employtee
-router.delete('/employee/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     const { id } = req.params;
     Employee.findByPk(id)
     .then((employee) => {
